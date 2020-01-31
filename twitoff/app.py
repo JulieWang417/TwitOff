@@ -2,7 +2,8 @@
 from decouple import config
 from flask import Flask,render_template,request
 from .models import DB,User
-# from .twitter import add_or_update_user
+from .twitter import add_or_update_user
+
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = config('DATABASE_URL')
@@ -33,6 +34,7 @@ def create_app():
     @app.route('/reset')
     def reset():
         DB.drop_all()
+
         DB.create_all()
         return render_template('base.html',title='DB Reset!',users=[])
     return app
